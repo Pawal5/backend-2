@@ -1,8 +1,8 @@
 import mongoose,{Schema} from "mongoose";
 import bcrypt from "bcrypt";
-import  JsonWebTokenError  from "jsonwebtoken";
+import  jwt  from "jsonwebtoken";
 const UserSchema=new Schema(
-    {
+    {  
       username:{
         type:String,
         required:true,
@@ -58,7 +58,7 @@ UserSchema.methods.isCorrect=async function(password){
   return await bcrypt.compare(password,this.password)
 }
 UserSchema.methods.tokenGen =async function(){
-  return JsonWebTokenError.sign(
+  return jwt.sign(
     {
       _id:this._id,
       email:this.email,
@@ -75,7 +75,7 @@ UserSchema.methods.tokenGen =async function(){
 
 
 UserSchema.methods.RefGen =async function(){
-  return JsonWebTokenError.sign(
+  return jwt.sign(
     {
       _id:this._id,
       
